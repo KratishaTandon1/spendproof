@@ -1,51 +1,59 @@
-# Hosted sandbox demo
+# Deployment
 
-The deployment uses a Cloudflare Worker, static assets, one D1 database, and a `workers.dev` HTTPS address. Keep the account on Workers Free. Creating this deployment does not require a domain purchase. Free quotas can interrupt service; they are not a promise of unlimited availability. Check current [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/) and [D1 pricing](https://developers.cloudflare.com/d1/platform/pricing/).
+The public application runs at [spendproof.spendproof.workers.dev](https://spendproof.spendproof.workers.dev/) on Cloudflare Workers with static assets and a D1 database. The latest UI and report-assistant fix are deployed. Migrations `0001` through `0006` are applied to the maintained database as of **9 November 2026**.
 
-Local development continues to use `wrangler.jsonc`. Hosted deployment uses **`wrangler.production.json`** so its real database ID does not replace the local database configuration or its saved test records. All payment endpoints remain PayPal sandbox endpoints.
+The commands below maintain that existing instance. The repository's resource IDs identify its deployment; authorization still requires the owning Cloudflare account. For an independent instance, use the separate setup notes below.
 
-For the planned move to Windows 11, follow [the Windows handoff](../START-HERE-WINDOWS.md). Its normal Wrangler code-deploy path reuses the existing Worker secrets and database without exporting credentials to the new PC. The Python hosting helper below remains available for the original environment.
+On Windows PowerShell, use `npm.cmd` and `npx.cmd`. Other supported shells can use `npm` and `npx`. Install from the lockfile before running Wrangler so the project uses its pinned toolchain. See [Wrangler prerequisites](https://developers.cloudflare.com/workers/wrangler/install-and-update/).
 
-The baseline is already published at <https://spendproof.spendproof.workers.dev/>. Its real D1 database, AI connection, Studio licence, sandbox payments and signed webhook retries passed on 1 November 2026. The latest feature upgrades and migration `0006` are local only. Do not publish them until the owner resumes deployment. The account and database instructions below document setup; an update should reuse the existing resources.
+## 1. Confirm the target
 
-## Account and database
+```sh
+npx wrangler login --scopes account:read user:read workers_scripts:write d1:write
+npx wrangler whoami
+npx wrangler secret list --config wrangler.production.json
+npx wrangler d1 migrations list spendproof-db --remote --config wrangler.production.json
+```
 
-1. Create and verify a Cloudflare account. The owner completes password, email verification, and account terms privately.
-2. Authenticate the installed Wrangler CLI. `npx wrangler login --device --browser=false --scopes account:read user:read workers_scripts:write d1:write` supports completing authorization on another PC. Review the permissions on Cloudflare; the CLI receives and stores the token without displaying it.
-3. Create one D1 database using `npx wrangler d1 create spendproof-db`. Record the account ID and returned database ID in `wrangler.production.json`. These IDs are configuration, not API secrets.
-4. Apply the schema to that new database:
+Check the account against `wrangler.production.json`. The maintained Worker is `spendproof`; its database is `spendproof-db`. All required service settings are listed in [Configuration](CONFIGURATION.md). No pending migration is expected for the current release.
+
+## 2. Validate the release
+
+```sh
+npm test
+npm run typecheck
+npm run build
+npx wrangler deploy --dry-run --config wrangler.production.json --autoconfig=false
+```
+
+A dry run bundles the Worker and checks its asset configuration without publishing. Resolve errors before proceeding.
+
+## 3. Apply schema changes when required
+
+Review genuinely pending migrations before applying them:
 
 ```sh
 npx wrangler d1 migrations apply spendproof-db --remote --config wrangler.production.json
 ```
 
-## Check and publish
+Migration `0006_purchase_webhook_receipts.sql` links verified notifications to purchases and adds an index. It is already applied to the maintained instance. It does not fabricate historical receipt associations; those links are populated by genuine verified deliveries. See [D1 migrations](https://developers.cloudflare.com/d1/reference/migrations/).
 
-Run private setup first if `.dev.vars` does not exist. It must contain the owner's sandbox app, Groq key, valid AG Studio Pro with AI licence, and generated session secret.
-
-```sh
-python3 scripts/host.py
-python3 scripts/host.py --dry-run
-```
-
-The first command checks configuration without uploading. The dry run builds the current source and bundles the Worker without publishing. Both reject the placeholder account or database ID.
-
-After reviewing the demo and its target account, publish explicitly:
+## 4. Publish and verify
 
 ```sh
-python3 scripts/host.py --publish
+npx wrangler deploy --config wrangler.production.json --autoconfig=false
 ```
 
-This uploads the app and an allowlist of service credentials into Cloudflare Worker secrets. Credentials are never placed in command-line arguments or public source. A temporary owner-readable JSON file is removed after the command. The script prints secret names, hides known values in command output, and does not upload other local configuration. It does not purchase or upgrade a plan.
+Normal code deployment preserves existing Worker secrets. Updating this instance does not require exporting credentials or uploading a replacement session secret. See [Cloudflare secrets](https://developers.cloudflare.com/workers/configuration/secrets/).
 
-Verify `/api/health`, create an isolated purchase, and test actual AI planning and the saved Studio report over HTTPS. A fresh hosted workspace starts with its own $150 application allowance; local payment proof is not imported as a new hosted payment.
+In Chrome Incognito, verify the dashboard, an allowed $54 AI proposal, Studio's **Explain my decisions** response, and the recorded capture/refund walkthrough. `/api/health` reports configuration status; it does not test every provider. A fresh browser session has its own workspace and may contain no purchases.
 
-## Actual PayPal webhook delivery
+## Independent deployment
 
-1. Register `https://<your-worker-address>/api/webhooks/paypal` on the same **sandbox REST app**. `python3 scripts/register_webhook.py --url https://<your-worker-address>/api/webhooks/paypal --register` creates or reuses this listener, subscribes to capture-completed, capture-pending and capture-refunded events, and saves its ID privately. It never creates a payment.
-2. If registering manually in PayPal Developer, add its webhook ID privately with `python3 scripts/configure.py`. Press Enter to retain other fields.
-3. Run `python3 scripts/host.py --upload-webhook` to update only that identifier on the existing hosted Worker. This does not resend the provider credentials.
-4. Complete an actual hosted sandbox capture and refund. Verify canonical provider state, signed webhook processing, and the allowance totals.
-5. Resend a received event through PayPal's sandbox webhook dashboard and verify that it does not duplicate payment or refund accounting. A simulator-only test does not establish real-event delivery.
+Authenticate to your own account, create a D1 database with `npx wrangler d1 create spendproof-db`, and update a deployment configuration with your account, database, and Worker identifiers. Apply all migrations to that new database, provision the service settings, build, inspect the dry run, and deploy using that configuration.
 
-Keep the site, AI free quota, and licence available through judging. The trial verified on 1 November 2026 expires on 16 December 2026. Publish the source and demo video separately; hosting alone does not submit a Devpost entry.
+The optional `scripts/host.py` helper supports configuration checks, `--dry-run`, and explicit `--publish` with an allowlist of private settings. Use it only after configuring the intended account and database.
+
+Register the HTTPS `/api/webhooks/paypal` endpoint on the matching sandbox REST app. `python3 scripts/register_webhook.py --url <HTTPS-WEBHOOK-URL> --register` creates or reuses that listener; its identifier must also be stored on the Worker. `python3 scripts/host.py --upload-webhook` updates that identifier for an existing deployment.
+
+Keep hosting quota, AI access, and Studio licence coverage available during evaluation. The demonstrated deployment uses free service plans; provider quotas and licence terms still apply.

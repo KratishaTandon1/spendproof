@@ -1,107 +1,95 @@
 # SpendProof
 
-An AI purchasing workspace that links a request, source evidence, policy checks, explicit approval, and PayPal sandbox payment proof.
+### AI purchase decisions with PayPal sandbox payment proof
 
-The agent proposes an offer. The server calculates the amount and checks the rules. The owner approves the exact proposal, and the buyer separately approves in PayPal. Unknown payment outcomes retain their allowance reservation until reconciled.
+[Live application](https://spendproof.spendproof.workers.dev/) · [Recorded walkthrough](https://spendproof.spendproof.workers.dev/?view=replay) · [Evaluation guide](docs/REVIEW_GUIDE.md) · [Architecture](docs/ARCHITECTURE.md)
 
-## Run locally
+SpendProof connects a purchasing brief to an offer, its source evidence, a policy decision, explicit approval, and the resulting payment record. AI assists with selection and analysis; the server calculates amounts, enforces policy, and controls payment operations.
 
-Requires Node.js 22.13 or newer. The test suite uses Node's SQLite module. The portable Node launcher supports Windows 11, macOS and supported Linux systems; Python 3 is optional for private configuration and the original Mac launcher. Windows transfer, GitHub and existing-Worker update steps are in [START-HERE-WINDOWS.md](START-HERE-WINDOWS.md).
+The application is deployed on Cloudflare Workers with D1. The current interface and report-assistant update were verified on the public application on **9 November 2026**. All payment integrations use **PayPal sandbox** and simulated funds.
+
+## The decision behind the purchase
+
+A request for three design licences has a $60 limit and permits one-time purchases. A $36 offer initially appears cheaper, but renews monthly. SpendProof blocks that proposal, evaluates a $54 one-time alternative, and retains the evidence behind both decisions.
+
+An allowed proposal is eligible for review. It becomes payment authority only after explicit approval of that exact proposal and policy version. Buyer approval in PayPal is a separate step; a verified capture establishes payment completion.
+
+```mermaid
+flowchart LR
+    A[Purchase brief] --> B[AI or manual proposal]
+    B --> C[Server policy checks]
+    C --> D[Exact human approval]
+    D --> E[PayPal buyer consent]
+    E --> F[Verified capture or refund]
+    F --> G[Connected proof and analytics]
+```
+
+## Core capabilities
+
+| Area              | Implementation                                                                                                                    |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Purchasing        | Natural-language briefs, optional AI constraint drafting, controlled offer comparison, and source-backed proposals.               |
+| Decision controls | Nine checks covering quantity, currency, merchant, quoted terms, evidence, billing, spending caps, and available allowance.       |
+| Approval          | Versioned proposals, policy snapshots, approval fingerprints, expiry, and explicit renewal of unchanged approvals.                |
+| Payment lifecycle | Durable reservations, PayPal order creation, verified capture, reconciliation, full refunds, and idempotent operation keys.       |
+| Evidence          | Proposal history, purchase-scoped signed webhook receipts, redacted JSON exports, and a printable proof view.                     |
+| Analysis          | Native AG Studio widgets, six data sources, AI-assisted reports, linked charts and tables, purchase drilldown, and saved layouts. |
+| Evaluation        | A recorded provider walkthrough, policy fixtures, recovery simulations, recurring-cost projections, and policy previews.          |
+
+## Integrations
+
+- **PayPal:** sandbox Orders and Payments APIs, hosted buyer approval, canonical capture/refund verification, and webhook signature verification.
+- **AG Studio:** native report editing, custom widgets, cross-filtering, and an AI harness whose tools inspect data or edit report layout.
+- **Groq:** structured purchase proposals and report assistance through a server-side adapter with bounded recovery for invalid tool arguments.
+- **Cloudflare:** a Worker serves the API and built frontend; D1 stores workspace state, approval records, financial accounting, and evidence.
+
+The frontend uses React and TypeScript. Hono handles API routing; Zod validates structured inputs. Vite builds the frontend with Rollup's official WebAssembly distribution.
+
+## Evaluate the application
+
+Start with the [recorded walkthrough](https://spendproof.spendproof.workers.dev/?view=replay) to inspect an earlier $54 sandbox capture, full refund, and signed notification deliveries. Playback makes no provider calls and does not alter the current workspace.
+
+For interactive evaluation, create a three-licence request with a $60 cap, compare the monthly offer with the $54 one-time offer, inspect the decision evidence, and open **Overview → Explore in Studio**. The [evaluation guide](docs/REVIEW_GUIDE.md) covers the full journey and an optional sandbox buyer test.
+
+## Local development
+
+Requires **Node.js 22.13 or newer** and npm. Windows users should follow the [Windows 11 guide](START-HERE-WINDOWS.md), which uses `npm.cmd` and `npx.cmd`.
 
 ```sh
+git clone https://github.com/KratishaTandon1/spendproof.git
+cd spendproof
 npm ci
+npm test
+npm run build
 npm start
 ```
 
-Manual catalogue checks and the recorded example work without provider keys. To enable AI, the accepted Studio licence and new sandbox payments locally, run `npm run setup:private` on Mac/Linux or `py -3 scripts/configure.py` on Windows with Python 3 installed, then restart. Existing hosted secrets can be reused when updating the same Cloudflare Worker; the Windows guide does not require a local credential export.
+Open [the local application](http://127.0.0.1:5173/). The launcher applies local migrations and starts the API on port 8787 and frontend on port 5173. Stop both with Ctrl+C.
 
-Open <http://127.0.0.1:5173/> yourself. The launcher opens no browser and makes no PayPal requests. The app only loads PayPal's SDK after **Prepare sandbox checkout** is clicked. **Continue with PayPal** is a separate user action.
-
-The private setup prompts hide input. Press Enter to keep an existing value or skip an optional field. Configuration is saved to ignored `.dev.vars`; POSIX systems receive mode `0600`, while Windows access follows the containing folder's NTFS permissions. Restart the API after changing it. Setup itself makes no network calls; the separate `npm run check:connections` command checks sandbox API authentication if you choose to run it.
-
-To switch to another sandbox app without re-entering other services, use `python3 scripts/configure.py --paypal-only`. It prompts only for the new app Client ID and Secret, preserves Groq and session settings, and clears a webhook ID associated with a replaced app. Changed app credentials are saved together through an owner-readable atomic file replacement. `npm run test:setup` verifies these setup safeguards using temporary test files.
-
-To add an **AG Studio Pro with AI** trial licence, use `python3 scripts/configure.py --studio-only`. AG Grid and AG Charts Enterprise keys do not cover Studio. It prompts for just that licence, preserves all other service settings, and makes no network calls. Input is hidden; paste the key and press Enter, then restart the API. Open the analytics workspace to check the key with AG Studio's own validator; a saved value alone does not establish licence validity.
-
-Optional manual startup, in two terminals after `npm run build` and `npm run db:local`:
-
-```sh
-npm run dev:api
-npm run dev
-```
-
-## Configuration
-
-| Variable                                   | Purpose                                                                                                |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
-| `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | Own merchant's **sandbox** REST app. Live PayPal endpoints are absent.                                 |
-| `GROQ_API_KEY`                             | Free account model access for purchase planning and AG Studio assistance.                              |
-| `GROQ_MODEL`                               | Defaults to `qwen/qwen3.8-27b`; availability and free quota depend on the provider account.            |
-| `AG_STUDIO_LICENSE`                        | AG Studio trial or valid production licence. Evaluation mode shows vendor watermarks until configured. |
-| `PAYPAL_WEBHOOK_ID`                        | Sandbox webhook registration for the deployed HTTPS endpoint.                                          |
-| `SESSION_SECRET`                           | Private random signing secret; generated by setup. Required for deployment.                            |
-
-The PayPal Client ID and AG Studio browser licence are intentionally browser-visible configuration. PayPal secrets, model keys, and the session signing secret remain server-side.
-
-## What is implemented
-
-- Natural-language briefs with optional AI constraint drafting and human confirmation.
-- Controlled fictional digital-products catalogue, exact source quotes, validated structured AI proposals, and manual planning labelled separately.
-- Integer-cent totals; quantity, currency, merchant, billing, spending-limit, and allowance checks.
-- ALLOW, REVIEW, and BLOCK decisions with evidence and reasons.
-- Versioned policy and exact proposal approval with a fingerprint and expiry.
-- Immutable proposal snapshots, before/after comparison, and inspection of recorded evaluations.
-- Session-scoped workspaces, durable allowance reservations, capture accounting, local checkout close, reconciliation, and verified full refunds.
-- Signature-verified, deduplicated PayPal webhooks with retryable processing and purchase-scoped delivery receipts.
-- A six-stage evidence journey, expandable notification receipts, printable purchase proof, and redacted JSON exports.
-- Real AG Studio integration: custom allowance, proposal-comparison and timeline widgets; six data sources including individual rule checks and signed receipts; native count/sum charts, cross-filtering and purchase drilldown; saved layouts and a native AI harness through a private Groq adapter.
-- Bounded report tools for inspecting data, adding visuals and atomically arranging widgets without overlaps. Report edits have save/discard controls.
-- One-time versus recurring base-cost projections with explicit assumptions, and a policy what-if preview that preserves historical decisions and active settings.
-- Nine server policy scenarios and five separate, clearly labelled recovery-model simulations.
-- An eleven-step replay of the actual hosted sandbox capture, refund and signed notification records. Playback makes no provider calls and changes no balances.
-- An overview that points to the next action, explicit purchase progress, failure-first check explanations with expandable passed evidence, and distinct search/empty states.
-- A shared visual theme for the application and native AG Studio editor; compact recorded playback, responsive layouts, mobile navigation with focus handling, modal focus trapping, and reduced-motion support. The advanced report editor keeps its wide canvas in a contained horizontal scroll area on phones.
-
-The initial $150 allowance is application accounting, not a PayPal wallet balance. The catalogue is fictional, prices are USD, and payments are sandbox only. There is one controlled merchant, one-time CAPTURE payments, and full refunds only.
+Manual catalogue evaluation and recorded playback work without service credentials. AI assistance, licensed Studio operation, and new sandbox payments require the settings described in [Configuration](docs/CONFIGURATION.md). Python 3 is optional for private setup and the setup/packaging test suite.
 
 ## Verification
 
-```sh
-npm test
-npm run typecheck
-npm run build
-# With the local app running:
-python3 scripts/test_http.py
-```
+The current code passed **52 application tests**, **16 Python setup and packaging tests**, TypeScript checks, a production build, and a Cloudflare deployment dry run. Provider-backed testing separately verified sandbox payment cycles and live AI/report behavior. See the [verification record](docs/TEST_EVIDENCE.md) for dates, methods, and coverage limits.
 
-Tests execute the real HTTP handlers and SQLite migrations. External provider responses are explicitly simulated. They cover repeated capture/refund, lost capture response, stale and expired approval, allowance limits, duplicate reservations, session isolation, webhook verification and retry, immutable proposal history, unsupported AI evidence, and native Studio tool-call translation. They do not establish live payment completion.
+## Scope
 
-Incognito browser testing verified AI constraint extraction, a blocked subscription followed by an allowed $54 AI proposal, proposal comparison, and a native AG Studio agent that reads data and creates a four-column report. The report saved and rendered the correct row after reload.
+This is a sandbox commerce prototype with four fictional offers, one controlled merchant, USD prices, one-time captures, and full refunds. The $150 initial allowance is application accounting, not a PayPal wallet balance. The catalogue does not provide real goods or fulfilment.
 
-On 1 November 2026, an actual PayPal sandbox cycle passed: hosted buyer approval, server-verified $54 capture, reconciliation without a duplicate capture, reload persistence, and a completed $54 full refund. The application allowance returned to $150 available, $0 spent, and $0 reserved. The exported audit contains one payment event and one refund event. These were sandbox funds; no real payment was made. See [test evidence and remaining gates](docs/TEST_EVIDENCE.md).
+Unresolved provider outcomes retain their accounting state until reconciled or investigated. The application does not claim universal exactly-once processing, independent audit certification, or production payment readiness.
 
-An additional actual hosted cycle passed at <https://spendproof.spendproof.workers.dev/>: a $54 capture, full refund, two signature-verified event types, and a repeated delivery of each event. The final ledger retained one payment and one refund, with $150 available. The replay uses a redacted snapshot of that earlier run and is labelled recorded throughout.
+## Documentation
 
-The earlier India sandbox merchant rejected USD with `UNSUPPORTED_PAYEE_CURRENCY`. The successful tests used a US sandbox merchant app. The owner's real PayPal account remains in India. The owner enters any required sandbox credentials directly on PayPal during private testing.
+| Document                                                 | Purpose                                                              |
+| -------------------------------------------------------- | -------------------------------------------------------------------- |
+| [Architecture](docs/ARCHITECTURE.md)                     | Authority boundaries, data flow, persistence, and recovery behavior. |
+| [Configuration](docs/CONFIGURATION.md)                   | Service settings, private setup, and feature availability.           |
+| [Deployment](docs/DEPLOYMENT.md)                         | Existing-demo maintenance and independent deployment.                |
+| [Windows 11 guide](START-HERE-WINDOWS.md)                | Installation, local operation, and maintenance on Windows.           |
+| [Evaluation guide](docs/REVIEW_GUIDE.md)                 | Reviewer walkthrough and demo sequence.                              |
+| [Verification record](docs/TEST_EVIDENCE.md)             | Automated coverage and observed provider behavior.                   |
+| [Report-assistant reliability](docs/AI-ASSISTANT-FIX.md) | Tool-argument validation and bounded retry design.                   |
 
-## Incognito checkout compatibility
+## Licence
 
-The embedded PayPal v6 SDK has a bounded preparation timeout. In the tested Chrome incognito session its initialization stalled. **Use hosted sandbox checkout** creates the same policy-controlled order through the server and returns a validated PayPal sandbox approval link. Open that link, approve as the sandbox buyer, return to the purchase, and choose **Verify approval and complete**. A return URL alone never captures a payment.
-
-If the owner's approval expires during login, **Renew exact approval** reviews and extends that same proposal and policy for the same order. It does not create a new reservation or another order, and cannot renew a changed quote or changed policy.
-
-## Recovery boundaries
-
-Known order IDs can be reconciled with PayPal without creating another order. Capture and refund use persistent idempotency keys. When an order-creation response is lost before its ID is stored, or a refund response is lost before its refund ID is known, this prototype keeps the unresolved state for investigation. It does not mint a fresh key or claim automatic recovery beyond a provider's retention period. Never describe this as universal exactly-once payment processing.
-
-Closing an idle checkout releases its application reservation and prevents this application from capturing it. It does not claim to cancel a PayPal order through an unsupported endpoint. Policy edits cannot recall a capture that already began with valid authority.
-
-## Deployment and submission gates
-
-The baseline is already hosted on Cloudflare Workers Free with static assets and D1. The feature upgrades described above are local and await the owner's later deployment step; migration `0006` is applied locally only. Local development uses `wrangler.jsonc`; hosting uses `wrangler.production.json` to preserve the local database and test records. Follow [the deployment guide](docs/DEPLOYMENT.md) to apply the new remote migration and check the bundle when publishing the upgrades. `python3 scripts/host.py` checks configuration without uploading; publication requires `--publish`. The hosting helper uploads only an allowlist of service settings as Worker secrets through a temporary private JSON file, then removes the file. Do not upload `.dev.vars` as source or publish its contents.
-
-The sandbox webhook is registered and actual signed deliveries and repeat handling have passed. Existing historical receipts gain purchase links when a genuine verified notification is received again; migration `0006` does not invent or backfill financial proof. Keep AI quota, hosted access, and the AG Studio licence valid through judging. No hosting account, external deployment, or public repository is created by the local launcher.
-
-This source is MIT licensed. AG Studio, AG Grid, AG Charts, and other dependencies retain their own licences. A trial key is not a permanent production licence.
-
-See [the review journey](docs/REVIEW_GUIDE.md) for a payment-free walkthrough and the owner-run sandbox test sequence.
+The application source is [MIT licensed](LICENSE). Third-party dependencies retain their respective licences. AG Studio Pro with AI requires appropriate product coverage; a trial does not confer a permanent production licence.

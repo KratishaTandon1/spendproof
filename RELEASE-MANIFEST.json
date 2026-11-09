@@ -1,6 +1,6 @@
 {
   "project": "SpendProof",
-  "format": "source-only Windows 11 handoff",
+  "format": "source-only project snapshot",
   "files": {
     ".env.example": {
       "bytes": 184,
@@ -19,28 +19,40 @@
       "sha256": "e66f85d92588bb04bcd0a78e3ccd8459dfdb0eabf3af67b9b2c6bb44514cd7d0"
     },
     "README.md": {
-      "bytes": 11900,
-      "sha256": "0025668c6c3843cf737bf6ac3500ee5c64bdd3efb18802485377c9fac60e9c7e"
+      "bytes": 7515,
+      "sha256": "edc1f9b7dc9076b80752729ef38bad4fdc99a144331c9a886eebd2ec7ab58aa5"
     },
     "START-HERE-WINDOWS.md": {
-      "bytes": 10955,
-      "sha256": "f7eabb6ba41ab174f0a9deb2aa79a045076a07d6c6135034d6f8013689d6e211"
+      "bytes": 2938,
+      "sha256": "1f620a6e44cb9da09f234eddb9ef3326bc97366a531ae82506a90b4e4464fff1"
     },
     "START-WINDOWS.cmd": {
       "bytes": 205,
       "sha256": "55f77b221d19db6935c705c571e9efb214b13c8d56a11f4a0ef52c8fe395e737"
     },
+    "docs/AI-ASSISTANT-FIX.md": {
+      "bytes": 1608,
+      "sha256": "c6020ca828cf6c22b7b085d4d46854367006f5e2df0706720d5a27daef58eb2b"
+    },
+    "docs/ARCHITECTURE.md": {
+      "bytes": 5030,
+      "sha256": "4cdacf4097b4024dd81464a0400906e4229164a32770ac5390f589aead465804"
+    },
+    "docs/CONFIGURATION.md": {
+      "bytes": 3687,
+      "sha256": "c8fd71579df9f669a51e818e7f254369c132bb43d0f60b170ce2b5150fbef06d"
+    },
     "docs/DEPLOYMENT.md": {
-      "bytes": 4774,
-      "sha256": "23da5d8eaca8ed39211afb23796a2a606fb23ef9647b386397d33bb405111c57"
+      "bytes": 4032,
+      "sha256": "74f52417882ecd8ca52f9e14b62cc90b5e26991f6b9a6c3dfcd8e7dab6fa2100"
     },
     "docs/REVIEW_GUIDE.md": {
-      "bytes": 5326,
-      "sha256": "5bd9fb23ae1b265649f61b73495ec1fc244c338eb4d5dd7501aaeb6b0c93516d"
+      "bytes": 4364,
+      "sha256": "91726426e6e8619fe90e0aa01bc273c0c030b3cf8fb750da11be8bb9661343c2"
     },
     "docs/TEST_EVIDENCE.md": {
-      "bytes": 11359,
-      "sha256": "c2fc6173aa86a7728055eb5761cd395a570871673757aaf7610c28e4fc51702d"
+      "bytes": 4568,
+      "sha256": "4f1bf1c87f8bcab8ac3dafeeec93858e904b768b2591d150f5091cf3b5b3d173"
     },
     "index.html": {
       "bytes": 444,
@@ -123,8 +135,8 @@
       "sha256": "61c2905cbd3a50b2ecb244f45045ce48bdb628e7fdd11445da4f993cc40381f9"
     },
     "src/server/providers.ts": {
-      "bytes": 9873,
-      "sha256": "3a32e8a73f7bf1fcf63763e0907af88d9744c7135b98360abdf12f292c520bfb"
+      "bytes": 11180,
+      "sha256": "c339d48738e8f3cfd6986516f44e09522aec41828d2fb49861906d1e118ddd3a"
     },
     "src/shared/analytics.ts": {
       "bytes": 4817,
@@ -179,8 +191,8 @@
       "sha256": "7b0dce76ab5aa47b35f0ef1a7d56e1f5bc461d3b33c7013b9bc161067df46e24"
     },
     "src/ui/reportTools.ts": {
-      "bytes": 12551,
-      "sha256": "d7ce0852490415fe8da0dba6ec58d4fe1f6a8a6b96b77479b3616026f3f0ad2f"
+      "bytes": 12720,
+      "sha256": "d408b55f2517c81ca3cfc9170a31388a5c023d1dab5f75fb2b5b4e6fd7753861"
     },
     "tests/analytics.test.ts": {
       "bytes": 4380,
@@ -197,6 +209,10 @@
     "tests/payments.test.ts": {
       "bytes": 26488,
       "sha256": "273c389c62fe1177fc761695d2576147da86a38b5d7a3439514811a6fadce0c6"
+    },
+    "tests/providers.test.ts": {
+      "bytes": 2869,
+      "sha256": "3d9cd2f4b96d6de88f71edea2343b8452f49f737bc868085781aa50c8b6711e0"
     },
     "tests/report-tools.test.ts": {
       "bytes": 7331,
