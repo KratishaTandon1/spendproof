@@ -1,0 +1,49 @@
+{
+  "name": "spendproof",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/start.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "dev:api": "wrangler dev --port 8787 --ip 127.0.0.1",
+    "db:local": "wrangler d1 migrations apply spendproof-db --local",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "test": "node scripts/test.mjs",
+    "check:connections": "python3 scripts/configure.py --check",
+    "setup:private": "python3 scripts/configure.py",
+    "format": "prettier --write src tests docs scripts/*.mjs README.md START-HERE-WINDOWS.md package.json tsconfig.json vite.config.ts wrangler.jsonc wrangler.production.json",
+    "format:check": "prettier --check src tests docs scripts/*.mjs README.md START-HERE-WINDOWS.md package.json tsconfig.json vite.config.ts wrangler.jsonc wrangler.production.json",
+    "test:setup": "python3 -m unittest discover -s tests -p 'test_*.py'"
+  },
+  "dependencies": {
+    "ag-studio-react": "^3.0.0",
+    "hono": "^4.13.16",
+    "lucide-react": "^0.539.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "rollup": "npm:@rollup/wasm-node@4.67.3",
+    "prettier": "^3.6.2",
+    "@cloudflare/workers-types": "^5.20260829.1",
+    "@types/node": "^22.20.5",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^5.2.0",
+    "tsx": "^4.23.15",
+    "typescript": "5.9",
+    "vite": "^7.3.7",
+    "wrangler": "^4.156.0"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "overrides": {
+    "vite": {
+      "rollup": "$rollup"
+    }
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "project": "SpendProof",
+  "format": "source-only Windows 11 handoff",
+  "files": {
+    ".env.example": {
+      "bytes": 184,
+      "sha256": "6b0266f33e57a9328ec3f4df3666501f156adb3c0d1943aabfc95dcbfc1c477d"
+    },
+    ".gitignore": {
+      "bytes": 143,
+      "sha256": "22eb89b548e08fea0c855520a3277c5fd0031994578ea6f2a0aa32532df1e635"
+    },
+    ".npmrc": {
+      "bytes": 22,
+      "sha256": "a093bb2fed59d699b7f9a62a5203cc196054c624e9c39c6d908c9e7db5dd2464"
+    },
+    "LICENSE": {
+      "bytes": 1155,
+      "sha256": "e66f85d92588bb04bcd0a78e3ccd8459dfdb0eabf3af67b9b2c6bb44514cd7d0"
+    },
+    "README.md": {
+      "bytes": 11900,
+      "sha256": "0025668c6c3843cf737bf6ac3500ee5c64bdd3efb18802485377c9fac60e9c7e"
+    },
+    "START-HERE-WINDOWS.md": {
+      "bytes": 10955,
+      "sha256": "f7eabb6ba41ab174f0a9deb2aa79a045076a07d6c6135034d6f8013689d6e211"
+    },
+    "START-WINDOWS.cmd": {
+      "bytes": 205,
+      "sha256": "55f77b221d19db6935c705c571e9efb214b13c8d56a11f4a0ef52c8fe395e737"
+    },
+    "docs/DEPLOYMENT.md": {
+      "bytes": 4774,
+      "sha256": "23da5d8eaca8ed39211afb23796a2a606fb23ef9647b386397d33bb405111c57"
+    },
+    "docs/REVIEW_GUIDE.md": {
+      "bytes": 5326,
+      "sha256": "5bd9fb23ae1b265649f61b73495ec1fc244c338eb4d5dd7501aaeb6b0c93516d"
+    },
+    "docs/TEST_EVIDENCE.md": {
+      "bytes": 11359,
+      "sha256": "c2fc6173aa86a7728055eb5761cd395a570871673757aaf7610c28e4fc51702d"
+    },
+    "index.html": {
+      "bytes": 444,
+      "sha256": "dd9de2d1909fe00c31e25f0cab262baf626b00bdcc7317dcb520ad484b0a2047"
+    },
+    "migrations/0001_initial.sql": {
+      "bytes": 4142,
+      "sha256": "bc1f1ad883efe2739c0ffc752da363d1f3a0d1ec501583d847fc9ee73465bd20"
+    },
+    "migrations/0002_reservation_insert_safety.sql": {
+      "bytes": 786,
+      "sha256": "9f91e2f39087d685e72a28a46815ae1bb379faed9baabdd01b14d0f4286a434b"
+    },
+    "migrations/0003_proposal_history.sql": {
+      "bytes": 1136,
+      "sha256": "b6ba6d72e5d487c27ae3a554974317550e9b503658d6859b5a56de127575a028"
+    },
+    "migrations/0004_hosted_checkout.sql": {
+      "bytes": 52,
+      "sha256": "56705b0798f48833ebd3ec173c620f3d2d8549c0bdc6ab77d40386b6827afccb"
+    },
+    "migrations/0005_webhook_delivery_counts.sql": {
+      "bytes": 248,
+      "sha256": "b53b2b84caf1714e09ee4620856c0c91fd09811aecce1f82b25fcbe351ba5eed"
+    },
+    "migrations/0006_purchase_webhook_receipts.sql": {
+      "bytes": 162,
+      "sha256": "2e13732a6190c4ed0bb6149dee77d69df8b0db1cb794bcf9a65137ef8729884b"
+    },
+    "package-lock.json": {
+      "bytes": 92507,
+      "sha256": "150a1580d638f799d8ad0b1b059bf3dabc2ed09bccc4673195b00cf94ba5e1e3"
+    },
+    "package.json": {
+      "bytes": 1656,
+      "sha256": "7013ecdc76e073934ce73faa5406dea637fd4ad11818f482b9677ea8c8b9ae6e"
+    },
+    "scripts/configure.py": {
+      "bytes": 6249,
+      "sha256": "467e15b929737cb15506f7abad07c326bd046766d20419e658a940b82fc3dbd0"
+    },
+    "scripts/host.py": {
+      "bytes": 4893,
+      "sha256": "6acb7623ea75779940beaeaf635cea4305595ea05a524619f7504e403950546f"
+    },
+    "scripts/package_release.py": {
+      "bytes": 4210,
+      "sha256": "ab0274f23085df75ab3084da67e4968b57d1addcd484b7f13846c3dde8597099"
+    },
+    "scripts/register_webhook.py": {
+      "bytes": 3670,
+      "sha256": "43fb96899411f314b851f878e5dc686a615a91c6a87c29df801a2aefa38a86b2"
+    },
+    "scripts/start.mjs": {
+      "bytes": 3824,
+      "sha256": "5a7ee65bd9308bd7618e42fe3364acb595e090db684984b11007190ed1099afc"
+    },
+    "scripts/start.py": {
+      "bytes": 1947,
+      "sha256": "92860a4575ff8c3758a7a3613927e823d1fead5683667a04b7ef57b29c8f0870"
+    },
+    "scripts/test.mjs": {
+      "bytes": 769,
+      "sha256": "c241db996f5e2dca8e46cad0b1fbee4f4d3aa6b51d40fbc8897715fc4e301643"
+    },
+    "scripts/test_http.py": {
+      "bytes": 4255,
+      "sha256": "4888824e91be29081464e18591dcae1c1c062e025fefc63736ed88819e45b577"
+    },
+    "src/data/recorded-run.json": {
+      "bytes": 13730,
+      "sha256": "181578f9dd015d960893d7101d55afbb8ec0a8341d6c158f2b338c8b3e50943d"
+    },
+    "src/main.tsx": {
+      "bytes": 90617,
+      "sha256": "bed2c228d621c507ef3d46ac6e40bae9876b22d85747d0ae1d09cddd70c2013c"
+    },
+    "src/server/index.ts": {
+      "bytes": 37242,
+      "sha256": "61c2905cbd3a50b2ecb244f45045ce48bdb628e7fdd11445da4f993cc40381f9"
+    },
+    "src/server/providers.ts": {
+      "bytes": 9873,
+      "sha256": "3a32e8a73f7bf1fcf63763e0907af88d9744c7135b98360abdf12f292c520bfb"
+    },
+    "src/shared/analytics.ts": {
+      "bytes": 4817,
+      "sha256": "bc35bb97fdb5c4473d66655c414546f8bc9004e48479752fc46fdc4c76428b2f"
+    },
+    "src/shared/chat.ts": {
+      "bytes": 1454,
+      "sha256": "bf3edcd92b2043b5750673f1da7a60a59ff77dd5b2e370578983d27d60ce1043"
+    },
+    "src/shared/domain.ts": {
+      "bytes": 12693,
+      "sha256": "b5baab52bf40115774c375ac0f4acb3e546b4739f422f28461254b934db70ca0"
+    },
+    "src/shared/reliability.ts": {
+      "bytes": 4635,
+      "sha256": "d2715134875110b14a77863809530371aa414caab984b1bd04c504e59ae73fa3"
+    },
+    "src/styles.css": {
+      "bytes": 63363,
+      "sha256": "e7716c168308d05e38af5e91008e99d77e3941c42e025ab941b44c80ab83203f"
+    },
+    "src/ui/DecisionChecks.tsx": {
+      "bytes": 2639,
+      "sha256": "b9e995414dcf445cb97cc851fdbefd60ac15102c206bd9dce5d8a1cd203d1ed2"
+    },
+    "src/ui/ProductLab.tsx": {
+      "bytes": 6916,
+      "sha256": "6cc9e2f1fd6432256af7004d014328fbb6129cc2e74362affd2002953ff5750b"
+    },
+    "src/ui/ProofJourney.tsx": {
+      "bytes": 6234,
+      "sha256": "632760e583a98fcc1bd9bb33793c756d2a119690bbfda7b29952de935976bd50"
+    },
+    "src/ui/RecordedRun.tsx": {
+      "bytes": 5924,
+      "sha256": "b807b04b032290fb453f338b5c0818840b9fd19024ff129a5f3708c254f3a40f"
+    },
+    "src/ui/ReliabilityLab.tsx": {
+      "bytes": 3028,
+      "sha256": "ce93f09347a53fce248d3fdc27a0ebc37e63d308a68b23ca5cf6d5a05491b771"
+    },
+    "src/ui/Studio.tsx": {
+      "bytes": 23027,
+      "sha256": "4a873bb93d9a90a40a457b7254d577621220d30ae3b53b6db2f6693f7f41bb2c"
+    },
+    "src/ui/WorkspaceFocus.tsx": {
+      "bytes": 5044,
+      "sha256": "2d190f85bc51dfe8d79ae17df3ee1b8d8dc60d467f6569bf0f4fbab04dc6ea3b"
+    },
+    "src/ui/refinement.css": {
+      "bytes": 32663,
+      "sha256": "7b0dce76ab5aa47b35f0ef1a7d56e1f5bc461d3b33c7013b9bc161067df46e24"
+    },
+    "src/ui/reportTools.ts": {
+      "bytes": 12551,
+      "sha256": "d7ce0852490415fe8da0dba6ec58d4fe1f6a8a6b96b77479b3616026f3f0ad2f"
+    },
+    "tests/analytics.test.ts": {
+      "bytes": 4380,
+      "sha256": "4723440b90c7108ecb89e7fc9c7e198be2b4e04b3064320274053fda2fa234c2"
+    },
+    "tests/chat.test.ts": {
+      "bytes": 1317,
+      "sha256": "da7c14178b1897403976c6acace16a55a31a888e5b52335ec22a6f4b0b045b5b"
+    },
+    "tests/domain.test.ts": {
+      "bytes": 4206,
+      "sha256": "9c1397b3b523acfd888f577ba2a7de5e33dd29aa9d8e137174020551ecd6a8de"
+    },
+    "tests/payments.test.ts": {
+      "bytes": 26488,
+      "sha256": "273c389c62fe1177fc761695d2576147da86a38b5d7a3439514811a6fadce0c6"
+    },
+    "tests/report-tools.test.ts": {
+      "bytes": 7331,
+      "sha256": "406b6da75b0783a69e4268ce6e591a61794dd2c2979656d37fa3e98fb94f01b2"
+    },
+    "tests/test_host.py": {
+      "bytes": 4214,
+      "sha256": "36989144ecf44a4e72ef3ba17736e8514dbd5b096dc62b3dfd6e19487fb42f89"
+    },
+    "tests/test_release.py": {
+      "bytes": 3808,
+      "sha256": "e6d05c4dfb2410abdfacc1a25f7d7c86c7b8763295e79c700ae6b66f0d77ee23"
+    },
+    "tests/test_setup.py": {
+      "bytes": 5137,
+      "sha256": "fc5dc208e316198c251d4f01c34e4f2adefe7ab4d8cceb91ee38dc296e5ad673"
+    },
+    "tsconfig.json": {
+      "bytes": 419,
+      "sha256": "e16ebd7902eed750331dc875e54ad25fb4c1472041e1c18f11f9cd2d34c75cd1"
+    },
+    "vite.config.ts": {
+      "bytes": 280,
+      "sha256": "cfcbea23b35f1812493bc789e62dd8fbfba0a8d7d0501d39a08bdfd972d75912"
+    },
+    "wrangler.jsonc": {
+      "bytes": 615,
+      "sha256": "5c440936e580459e0d758d5b18b5c98f677e58de4def3314e3669c57557fa27e"
+    },
+    "wrangler.production.json": {
+      "bytes": 721,
+      "sha256": "eb46f194674f9f51c76a2cea3d62175c48db99d3ba55df21feb6240ee025b0ef"
+    }
+  }
+}

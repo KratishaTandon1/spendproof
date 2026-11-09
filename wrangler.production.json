@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "spendproof",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2026-10-30",
+  "send_metrics": false,
+  "workers_dev": true,
+  "preview_urls": false,
+  "account_id": "5703d4bcc5ad6a9895e94e7f8c9c3f53",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "spendproof-db",
+      "database_id": "ad860022-7cf3-4b45-9a38-0d39d3322046",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "vars": {
+    "GROQ_MODEL": "qwen/qwen3.8-27b",
+    "ENVIRONMENT": "sandbox"
+  }
+}

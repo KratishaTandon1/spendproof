@@ -1,0 +1,372 @@
+{
+  "recorded": true,
+  "environment": "PayPal sandbox",
+  "recordedAt": "2026-11-01T09:12:11.899Z",
+  "purchase": {
+    "id": "2ac2e11a-64f9-4ed2-b20d-0ab17b851298",
+    "title": "Hosted sandbox and webhook verification",
+    "intent": "Buy three design asset licences for no more than $60 total. One-time purchases only, from the approved demo merchant.",
+    "quantity": 3,
+    "cap": 6000,
+    "status": "REFUNDED",
+    "plan": {
+      "offerId": "studio-kit",
+      "quantity": 3,
+      "currency": "USD",
+      "merchant": "spendproof-studio",
+      "billing": "once",
+      "explanation": "Selected Studio Kit as it is a one-time purchase from the approved merchant, and the total cost of $54 is within the $60 cap.",
+      "evidence": [
+        "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+      ],
+      "origin": "ai"
+    },
+    "evaluation": {
+      "decision": "ALLOW",
+      "checks": [
+        {
+          "code": "QUANTITY",
+          "label": "Quantity matches your request",
+          "outcome": "pass",
+          "detail": "3 proposed \u00b7 3 requested \u00b7 policy permits 3"
+        },
+        {
+          "code": "CURRENCY",
+          "label": "Currency is permitted",
+          "outcome": "pass",
+          "detail": "USD proposed \u00b7 USD in catalogue \u00b7 USD permitted"
+        },
+        {
+          "code": "MERCHANT",
+          "label": "Merchant is approved",
+          "outcome": "pass",
+          "detail": "Catalogue seller: spendproof-studio",
+          "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+        },
+        {
+          "code": "TERMS_MATCH",
+          "label": "Proposal matches source terms",
+          "outcome": "pass",
+          "detail": "Proposed: once \u00b7 catalogue: once",
+          "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+        },
+        {
+          "code": "EVIDENCE",
+          "label": "Source evidence is supported",
+          "outcome": "pass",
+          "detail": "Proposal excerpts must match the current controlled catalogue source.",
+          "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+        },
+        {
+          "code": "BILLING",
+          "label": "No unwanted recurring charge",
+          "outcome": "pass",
+          "detail": "One-time purchase. No renewal.",
+          "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+        },
+        {
+          "code": "REQUEST_CAP",
+          "label": "Within the purchase limit",
+          "outcome": "pass",
+          "detail": "$54.00 total \u00b7 $60.00 request limit"
+        },
+        {
+          "code": "POLICY_CAP",
+          "label": "Within the policy limit",
+          "outcome": "pass",
+          "detail": "$54.00 total \u00b7 $60.00 policy limit"
+        },
+        {
+          "code": "ALLOWANCE",
+          "label": "Allowance is available",
+          "outcome": "pass",
+          "detail": "$150.00 currently available. This is an application allowance, not a PayPal balance."
+        }
+      ],
+      "total": 5400,
+      "offerId": "studio-kit",
+      "policyVersion": 1
+    },
+    "total": 5400,
+    "version": 3,
+    "policy_version": 1,
+    "approval_hash": "7871bcaa1025d0931c49881df5ac0ad9ae1781f6112e60d75e69649ae6537624",
+    "approval_expires": "2026-11-01T09:10:36.877Z",
+    "order_id": "9HA6735921320153E",
+    "capture_id": "1C7766410J529832S",
+    "refund_id": "3G6248067G379515N",
+    "created_at": "2026-11-01T08:54:56.332Z",
+    "updated_at": "2026-11-01T09:10:07.067Z",
+    "source": "ai"
+  },
+  "versions": [
+    {
+      "purchase_id": "2ac2e11a-64f9-4ed2-b20d-0ab17b851298",
+      "version": 2,
+      "plan": {
+        "offerId": "studio-plus",
+        "quantity": 3,
+        "currency": "USD",
+        "merchant": "spendproof-studio",
+        "billing": "monthly",
+        "explanation": "Selected in the manual proposal builder. This is not an AI-generated recommendation.",
+        "evidence": [
+          "Studio Plus \u2014 $12 per licence per month. Automatically renews monthly until cancelled. Sold by SpendProof Studio."
+        ],
+        "origin": "manual"
+      },
+      "evaluation": {
+        "decision": "BLOCK",
+        "checks": [
+          {
+            "code": "QUANTITY",
+            "label": "Quantity matches your request",
+            "outcome": "pass",
+            "detail": "3 proposed \u00b7 3 requested \u00b7 policy permits 3"
+          },
+          {
+            "code": "CURRENCY",
+            "label": "Currency is permitted",
+            "outcome": "pass",
+            "detail": "USD proposed \u00b7 USD in catalogue \u00b7 USD permitted"
+          },
+          {
+            "code": "MERCHANT",
+            "label": "Merchant is approved",
+            "outcome": "pass",
+            "detail": "Catalogue seller: spendproof-studio",
+            "evidence": "Studio Plus \u2014 $12 per licence per month. Automatically renews monthly until cancelled. Sold by SpendProof Studio."
+          },
+          {
+            "code": "TERMS_MATCH",
+            "label": "Proposal matches source terms",
+            "outcome": "pass",
+            "detail": "Proposed: monthly \u00b7 catalogue: monthly",
+            "evidence": "Studio Plus \u2014 $12 per licence per month. Automatically renews monthly until cancelled. Sold by SpendProof Studio."
+          },
+          {
+            "code": "EVIDENCE",
+            "label": "Source evidence is supported",
+            "outcome": "pass",
+            "detail": "Proposal excerpts must match the current controlled catalogue source.",
+            "evidence": "Studio Plus \u2014 $12 per licence per month. Automatically renews monthly until cancelled. Sold by SpendProof Studio."
+          },
+          {
+            "code": "BILLING",
+            "label": "No unwanted recurring charge",
+            "outcome": "fail",
+            "detail": "This offer renews every month.",
+            "evidence": "Studio Plus \u2014 $12 per licence per month. Automatically renews monthly until cancelled. Sold by SpendProof Studio."
+          },
+          {
+            "code": "REQUEST_CAP",
+            "label": "Within the purchase limit",
+            "outcome": "pass",
+            "detail": "$36.00 total \u00b7 $60.00 request limit"
+          },
+          {
+            "code": "POLICY_CAP",
+            "label": "Within the policy limit",
+            "outcome": "pass",
+            "detail": "$36.00 total \u00b7 $60.00 policy limit"
+          },
+          {
+            "code": "ALLOWANCE",
+            "label": "Allowance is available",
+            "outcome": "pass",
+            "detail": "$150.00 currently available. This is an application allowance, not a PayPal balance."
+          }
+        ],
+        "total": 3600,
+        "offerId": "studio-plus",
+        "policyVersion": 1
+      },
+      "total": 3600,
+      "policy_version": 1,
+      "policy_snapshot": {
+        "version": 1,
+        "name": "Thoughtful spending",
+        "maxTotal": 6000,
+        "allowedCurrency": "USD",
+        "maxQuantity": 3,
+        "oneTimeOnly": true,
+        "approvedMerchant": "spendproof-studio",
+        "approvalMinutes": 15
+      },
+      "source": "manual",
+      "created_at": "2026-11-01T08:55:13.945Z"
+    },
+    {
+      "purchase_id": "2ac2e11a-64f9-4ed2-b20d-0ab17b851298",
+      "version": 3,
+      "plan": {
+        "offerId": "studio-kit",
+        "quantity": 3,
+        "currency": "USD",
+        "merchant": "spendproof-studio",
+        "billing": "once",
+        "explanation": "Selected Studio Kit as it is a one-time purchase from the approved merchant, and the total cost of $54 is within the $60 cap.",
+        "evidence": [
+          "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+        ],
+        "origin": "ai"
+      },
+      "evaluation": {
+        "decision": "ALLOW",
+        "checks": [
+          {
+            "code": "QUANTITY",
+            "label": "Quantity matches your request",
+            "outcome": "pass",
+            "detail": "3 proposed \u00b7 3 requested \u00b7 policy permits 3"
+          },
+          {
+            "code": "CURRENCY",
+            "label": "Currency is permitted",
+            "outcome": "pass",
+            "detail": "USD proposed \u00b7 USD in catalogue \u00b7 USD permitted"
+          },
+          {
+            "code": "MERCHANT",
+            "label": "Merchant is approved",
+            "outcome": "pass",
+            "detail": "Catalogue seller: spendproof-studio",
+            "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+          },
+          {
+            "code": "TERMS_MATCH",
+            "label": "Proposal matches source terms",
+            "outcome": "pass",
+            "detail": "Proposed: once \u00b7 catalogue: once",
+            "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+          },
+          {
+            "code": "EVIDENCE",
+            "label": "Source evidence is supported",
+            "outcome": "pass",
+            "detail": "Proposal excerpts must match the current controlled catalogue source.",
+            "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+          },
+          {
+            "code": "BILLING",
+            "label": "No unwanted recurring charge",
+            "outcome": "pass",
+            "detail": "One-time purchase. No renewal.",
+            "evidence": "Studio Kit \u2014 $18 per licence. One-time purchase. No renewal. Tax: $0. Shipping: $0. Sold by SpendProof Studio."
+          },
+          {
+            "code": "REQUEST_CAP",
+            "label": "Within the purchase limit",
+            "outcome": "pass",
+            "detail": "$54.00 total \u00b7 $60.00 request limit"
+          },
+          {
+            "code": "POLICY_CAP",
+            "label": "Within the policy limit",
+            "outcome": "pass",
+            "detail": "$54.00 total \u00b7 $60.00 policy limit"
+          },
+          {
+            "code": "ALLOWANCE",
+            "label": "Allowance is available",
+            "outcome": "pass",
+            "detail": "$150.00 currently available. This is an application allowance, not a PayPal balance."
+          }
+        ],
+        "total": 5400,
+        "offerId": "studio-kit",
+        "policyVersion": 1
+      },
+      "total": 5400,
+      "policy_version": 1,
+      "policy_snapshot": {
+        "version": 1,
+        "name": "Thoughtful spending",
+        "maxTotal": 6000,
+        "allowedCurrency": "USD",
+        "maxQuantity": 3,
+        "oneTimeOnly": true,
+        "approvedMerchant": "spendproof-studio",
+        "approvalMinutes": 15
+      },
+      "source": "ai",
+      "created_at": "2026-11-01T08:55:23.825Z"
+    }
+  ],
+  "events": [
+    {
+      "kind": "REQUEST",
+      "title": "Purchase request created",
+      "detail": "Buy three design asset licences for no more than $60 total. One-time purchases only, from the approved demo merchant.",
+      "source": "APP",
+      "created_at": "2026-11-01T08:54:56.502Z"
+    },
+    {
+      "kind": "PLAN",
+      "title": "Manual proposal evaluated",
+      "detail": "BLOCK: Selected in the manual proposal builder. This is not an AI-generated recommendation.",
+      "source": "APP",
+      "created_at": "2026-11-01T08:55:14.118Z"
+    },
+    {
+      "kind": "PLAN",
+      "title": "AI proposal evaluated",
+      "detail": "ALLOW: Selected Studio Kit as it is a one-time purchase from the approved merchant, and the total cost of $54 is within the $60 cap.",
+      "source": "AI",
+      "created_at": "2026-11-01T08:55:23.996Z"
+    },
+    {
+      "kind": "APPROVAL",
+      "title": "Exact proposal approved",
+      "detail": "$54.00 \u00b7 proposal v3 \u00b7 policy v1 \u00b7 expires 2026-11-01T09:10:36.877Z",
+      "source": "APP",
+      "created_at": "2026-11-01T08:55:37.043Z"
+    },
+    {
+      "kind": "ORDER",
+      "title": "Sandbox order created",
+      "detail": "9HA6735921320153E",
+      "source": "PAYPAL",
+      "created_at": "2026-11-01T08:56:02.799Z"
+    },
+    {
+      "kind": "PAYMENT",
+      "title": "Payment verified",
+      "detail": "$54.00 gross capture \u00b7 1C7766410J529832S",
+      "source": "PAYPAL",
+      "created_at": "2026-11-01T09:08:37.738Z"
+    },
+    {
+      "kind": "REFUND",
+      "title": "Refund verified",
+      "detail": "$54.00 \u00b7 3G6248067G379515N",
+      "source": "PAYPAL",
+      "created_at": "2026-11-01T09:09:49.935Z"
+    }
+  ],
+  "webhookReceipts": [
+    {
+      "id": "WH-4RE71878CM877720E-031123918D465564K",
+      "event_type": "PAYMENT.CAPTURE.COMPLETED",
+      "processed": 1,
+      "deliveries": 2,
+      "received_at": "2026-11-01T09:08:52.118Z",
+      "last_received_at": "2026-11-01T09:15:50.116Z"
+    },
+    {
+      "id": "WH-6X51711496146410J-20K764474K124860K",
+      "event_type": "PAYMENT.CAPTURE.REFUNDED",
+      "processed": 1,
+      "deliveries": 2,
+      "received_at": "2026-11-01T09:10:06.562Z",
+      "last_received_at": "2026-11-01T09:15:56.545Z"
+    }
+  ],
+  "finalAllowance": {
+    "allocated": 15000,
+    "available": 15000,
+    "reserved": 0,
+    "spent": 0
+  },
+  "scope": "Recorded actual sandbox run. Playback creates no AI request, payment, refund or active workspace record."
+}
